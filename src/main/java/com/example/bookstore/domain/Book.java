@@ -27,6 +27,14 @@ public class Book implements Serializable{
 	private String authorName;
 	private String text;
 	
+	
+	public Book(Long id, String title, String authorName, String text) {
+		this.id = id;
+		this.title = title;
+		this.authorName = authorName;
+		this.text = text;
+	}
+
 	@ManyToOne
 	@JoinColumn(name = "category_id")
 	private Category category;
