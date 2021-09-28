@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.bookstore.domain.Category;
+import com.example.bookstore.dtos.CategoryDTO;
 import com.example.bookstore.exceptions.EntityNotFoundException;
 import com.example.bookstore.repositories.CategoryRepository;
 
@@ -29,6 +30,13 @@ public class CategoryService {
 	
 	public Category create(Category obj) {
 		obj.setId(null);
+		return categoryRepository.save(obj);
+	}
+
+	public Category update(CategoryDTO objDTO, Long id) {
+		Category obj = findById(id);
+		obj.setName(objDTO.getName());
+		obj.setDescription(objDTO.getDescription());
 		return categoryRepository.save(obj);
 	}
 }
