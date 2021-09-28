@@ -1,5 +1,8 @@
 package com.example.bookstore.resources;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.bookstore.domain.Category;
+import com.example.bookstore.dtos.CategoryDTO;
 import com.example.bookstore.service.CategoryService;
 
 @RestController
@@ -21,5 +25,12 @@ public class CategoryResource {
 	public ResponseEntity<Category> findById(@PathVariable Long id) {
 		Category result = categoryService.findById(id);
 		return ResponseEntity.ok().body(result);
+	}
+	
+	@GetMapping
+	public ResponseEntity<List<CategoryDTO>> findAll() {
+		List<Category> list = categoryService.findAll();
+		List<CategoryDTO> listDTO = list.stream().map(obj -> new CategoryDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDTO);
 	}
 }
