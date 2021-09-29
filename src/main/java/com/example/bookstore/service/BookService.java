@@ -1,5 +1,6 @@
 package com.example.bookstore.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +14,18 @@ import com.example.bookstore.repositories.BookRepository;
 public class BookService {
 	
 	@Autowired
-	BookRepository bookRepository;
+	private BookRepository bookRepository;
+	
+	@Autowired
+	private CategoryService categoryService;
 
 	public Book findById(Long id) {
 		Optional<Book> obj = bookRepository.findById(id);
 		return obj.orElseThrow(() -> new EntityNotFoundException("Objeto não encontrado! id: " + id));
+	}
+
+	public List<Book> findAll(Long id_cat) {
+		categoryService.findById(id_cat);
+		return bookRepository.findByCategory(id_cat);
 	}
 }

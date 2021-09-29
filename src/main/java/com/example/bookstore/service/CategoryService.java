@@ -19,8 +19,8 @@ public class CategoryService {
 	private CategoryRepository categoryRepository;
 
 	public Category findById(Long id) {
-		Optional<Category> result = categoryRepository.findById(id);
-		return result.orElseThrow(() -> new EntityNotFoundException("Entity not found, id: " + id));
+		Optional<Category> obj = categoryRepository.findById(id);
+		return obj.orElseThrow(() -> new EntityNotFoundException("Entity not found, id: " + id));
 	}
 
 	public List<Category> findAll() {
