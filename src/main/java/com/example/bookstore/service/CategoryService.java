@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.example.bookstore.domain.Category;
@@ -19,15 +20,13 @@ public class CategoryService {
 
 	public Category findById(Long id) {
 		Optional<Category> result = categoryRepository.findById(id);
-		return result.orElseThrow(
-				() -> new EntityNotFoundException("Entity not found, id: " + id)
-				);
+		return result.orElseThrow(() -> new EntityNotFoundException("Entity not found, id: " + id));
 	}
-	
+
 	public List<Category> findAll() {
 		return categoryRepository.findAll();
 	}
-	
+
 	public Category create(Category obj) {
 		obj.setId(null);
 		return categoryRepository.save(obj);
@@ -39,9 +38,14 @@ public class CategoryService {
 		obj.setDescription(objDTO.getDescription());
 		return categoryRepository.save(obj);
 	}
-	
+
 	public void delete(Long id) {
 		findById(id);
-		categoryRepository.deleteById(id);
+		try {
+			categoryRepository.deleteById(id);
+		} catch (DataIntegrityViolationException e) {
+			throw new com.example.bookstore.exceptions.DataIntegrityViolationException(
+					"Não pode ser deletado! Possui Objetos Relacionados");
+		}
 	}
 }
