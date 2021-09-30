@@ -25,7 +25,7 @@ public class BookService {
 		return obj.orElseThrow(() -> new EntityNotFoundException("Objeto não encontrado! id: " + id));
 	}
 
-	public List<Book> findAll(Long id_cat) {
+	public List<Book> findAllByCategory(Long id_cat) {
 		categoryService.findById(id_cat);
 		return bookRepository.findByCategory(id_cat);
 	}
@@ -52,6 +52,10 @@ public class BookService {
 	public void delete(Long id) {
 		Book obj = findById(id);
 		bookRepository.delete(obj);
+	}
+
+	public List<Book> findAll() {
+		return bookRepository.findAll();
 	}
 	
 	

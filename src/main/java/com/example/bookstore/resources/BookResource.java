@@ -36,9 +36,16 @@ public class BookResource {
 		return ResponseEntity.ok().body(obj);
 	}
 	
+	@GetMapping(value = "findAll")
+	public ResponseEntity<List<BookDTO>> findAll() {
+		List<Book> bookList = bookService.findAll();
+		List<BookDTO> bookListDTO = bookList.stream().map(obj -> new BookDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(bookListDTO);
+	}
+	
 	@GetMapping
 	public ResponseEntity<List<BookDTO>> findAllByCategory(@RequestParam(value = "category", defaultValue = "0") Long id_cat) {
-		List<Book> bookList = bookService.findAll(id_cat);
+		List<Book> bookList = bookService.findAllByCategory(id_cat);
 		List<BookDTO> bookListDTO = bookList.stream().map(obj -> new BookDTO(obj)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(bookListDTO);
 	}
