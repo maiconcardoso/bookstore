@@ -9,6 +9,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -27,8 +30,17 @@ public class Book implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@NotEmpty(message = "Title field is required")
+	@Length(min = 3, max = 100, message = "The title must have more than three characters.")
 	private String title;
+	
+	@NotEmpty(message = "Author field is required")
+	@Length(min = 3, max = 100, message = "The Author must have more than three characters.")
 	private String authorName;
+	
+	@NotEmpty(message = "Text field is required")
+	@Length(min = 3, message = "The Text must have more than three characters.")
 	private String text;
 	
 	
