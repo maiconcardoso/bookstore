@@ -1,4 +1,4 @@
-package com.example.bookstore.domain;
+ package com.example.bookstore.domain;
 
 import java.io.Serializable;
 

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.bookstore.domain.Book;
+import com.example.bookstore.domain.Category;
 import com.example.bookstore.exceptions.EntityNotFoundException;
 import com.example.bookstore.repositories.BookRepository;
 
@@ -39,5 +40,12 @@ public class BookService {
 		newObj.setTitle(obj.getTitle());
 		newObj.setAuthorName(obj.getAuthorName());
 		newObj.setText(obj.getText());
+	}
+
+	public Book create(Long id_cat, Book obj) {
+		obj.setId(null);
+		Category cat = categoryService.findById(id_cat);
+		obj.setCategory(cat);
+		return bookRepository.save(obj);
 	}
 }
