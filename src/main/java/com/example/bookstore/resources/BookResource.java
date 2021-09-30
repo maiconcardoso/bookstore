@@ -6,7 +6,10 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,4 +38,17 @@ public class BookResource {
 		List<BookDTO> bookListDTO = bookList.stream().map(obj -> new BookDTO(obj)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(bookListDTO);
 	}
+	
+	@PutMapping(value = "/{id}")
+	public ResponseEntity<Book> update(@PathVariable Long id, @RequestBody Book obj) {
+		Book newObj = bookService.update(id, obj);
+		return ResponseEntity.ok().body(newObj);
+	}
+	
+	@PatchMapping(value = "/{id}")
+	public ResponseEntity<Book> updatePatch(@PathVariable Long id, @RequestBody Book obj) {
+		Book newObj = bookService.update(id, obj);
+		return ResponseEntity.ok().body(newObj);
+	}
+	
 }
