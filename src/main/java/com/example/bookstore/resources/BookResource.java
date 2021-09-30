@@ -37,7 +37,7 @@ public class BookResource {
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<BookDTO>> findAll(@RequestParam(value = "category", defaultValue = "0") Long id_cat) {
+	public ResponseEntity<List<BookDTO>> findAllByCategory(@RequestParam(value = "category", defaultValue = "0") Long id_cat) {
 		List<Book> bookList = bookService.findAll(id_cat);
 		List<BookDTO> bookListDTO = bookList.stream().map(obj -> new BookDTO(obj)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(bookListDTO);
