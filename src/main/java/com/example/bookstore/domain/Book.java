@@ -40,7 +40,7 @@ public class Book implements Serializable{
 	private String authorName;
 	
 	@NotEmpty(message = "Text field is required")
-	@Length(min = 3, message = "The Text must have more than three characters.")
+	@Length(min = 3, max = 2000000, message = "The Text must have more than three characters.")
 	private String text;
 	
 	
